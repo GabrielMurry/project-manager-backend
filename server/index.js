@@ -14,7 +14,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "https://project-manager-frontend-delta.vercel.app/",
+    origin: "https://project-manager-frontend-delta.vercel.app",
     credentials: true,
   })
 );
