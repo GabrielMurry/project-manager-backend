@@ -5,8 +5,6 @@ require("dotenv").config();
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema/schema");
 const connectDB = require("./config/db");
-const corsOptions = require("./config/corsOptions");
-const credentials = require("./middleware/credentials");
 const port = process.env.PORT || 8000;
 
 const app = express();
@@ -14,11 +12,12 @@ const app = express();
 // Connect to database
 connectDB();
 
-// Handle options credentials check - before CORS!
-// and fetch cookies credentials requirement
-app.use(credentials);
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "https://project-manager-frontend-delta.vercel.app/",
+    credentials: true,
+  })
+);
 
 // built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
