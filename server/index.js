@@ -12,15 +12,19 @@ const app = express();
 // Connect to database
 connectDB();
 
-app.use(
-  cors({
-    origin: "https://project-manager-frontend-delta.vercel.app",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//   })
+// );
 
 app.use(
   "/graphql",
+  cors({
+    origin: "https://project-manager-frontend-delta.vercel.app",
+    credentials: true,
+  }),
   graphqlHTTP({
     schema: schema,
     graphiql: process.env.NODE_ENV === "development",
