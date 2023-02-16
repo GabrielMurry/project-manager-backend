@@ -6,12 +6,17 @@ const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema/schema");
 const connectDB = require("./config/db");
 const corsOptions = require("./config/corsOptions");
+const credentials = require("./middleware/credentials");
 const port = process.env.PORT || 8000;
 
 const app = express();
 
 // Connect to database
 connectDB();
+
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+app.use(credentials);
 
 app.use(cors(corsOptions));
 
