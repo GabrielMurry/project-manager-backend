@@ -15,6 +15,9 @@ connectDB();
 
 app.use(cors(corsOptions));
 
+// built-in middleware to handle urlencoded form data
+app.use(express.urlencoded({ extended: false }));
+
 app.use(
   "/graphql",
   graphqlHTTP({
