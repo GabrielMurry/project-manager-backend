@@ -12,25 +12,15 @@ const app = express();
 // Connect to database
 connectDB();
 
-const corsOptions = {
-  origin: "",
+// enable cors
+var corsOptions = {
+  origin: "https://project-manager-frontend.onrender.com",
+  credentials: true, // <-- REQUIRED backend setting
 };
-
 app.use(cors(corsOptions));
-
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//   })
-// );
 
 app.use(
   "/graphql",
-  cors({
-    origin: "https://project-manager-frontend.onrender.com",
-    credentials: true, //https://project-manager-frontend.onrender.com
-  }),
   graphqlHTTP({
     schema: schema,
     graphiql: process.env.NODE_ENV === "development",
