@@ -12,6 +12,12 @@ const app = express();
 // Connect to database
 connectDB();
 
+const corsOptions = {
+  origin: "",
+};
+
+app.use(cors(corsOptions));
+
 // app.use(
 //   cors({
 //     origin: "http://localhost:3000",
@@ -21,18 +27,10 @@ connectDB();
 
 app.use(
   "/graphql",
-  function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization, Content-Length, X-Requested-With"
-    );
-    if (req.method === "OPTIONS") {
-      res.sendStatus(200);
-    } else {
-      next();
-    }
-  },
+  cors({
+    origin: "https://project-manager-frontend.onrender.com",
+    credentials: true, //https://project-manager-frontend.onrender.com
+  }),
   graphqlHTTP({
     schema: schema,
     graphiql: process.env.NODE_ENV === "development",
