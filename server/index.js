@@ -1,7 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const colors = require("colors");
 const cors = require("cors");
-require("dotenv").config();
+const corsOptions = require("./config/corsOptions");
+const credentials = require("./middleware/credentials");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema/schema");
 const connectDB = require("./config/db");
@@ -12,15 +14,25 @@ const app = express();
 // Connect to database
 connectDB();
 
-// enable cors
-var corsOptions = {
-  origin: "https://project-manager-frontend.onrender.com",
-  credentials: true, // <-- REQUIRED backend setting
-};
+app.use(credentials);
+
 app.use(cors(corsOptions));
+
+// enable cors
+// var corsOptions = {
+//   // https://project-manager-frontend.onrender.com
+//   // http://localhost:3000
+//   origin: "http://localhost:3000",
+//   credentials: true, // <-- REQUIRED backend setting
+// };
+// app.use(cors(corsOptions));
 
 app.use(
   "/graphql",
+  // cors({
+  //   origin: "http://localhost:3000",
+  //   credentials: true,
+  // }),
   graphqlHTTP({
     schema: schema,
     graphiql: process.env.NODE_ENV === "development",
