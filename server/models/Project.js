@@ -15,6 +15,12 @@ const ProjectSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Client",
   },
+  startDate: {
+    type: String,
+  },
+  endDate: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Project", ProjectSchema);

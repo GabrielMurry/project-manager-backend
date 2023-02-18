@@ -28,6 +28,8 @@ const ProjectType = new GraphQLObjectType({
         return Client.findById(parent.clientId);
       },
     },
+    startDate: { type: GraphQLString },
+    endDate: { type: GraphQLString },
   }),
 });
 
@@ -135,6 +137,8 @@ const mutation = new GraphQLObjectType({
           defaultValue: "Not Started",
         },
         clientId: { type: GraphQLNonNull(GraphQLID) },
+        startDate: { type: GraphQLString },
+        endDate: { type: GraphQLString },
       },
       resolve(parent, args) {
         const project = new Project({
@@ -142,6 +146,8 @@ const mutation = new GraphQLObjectType({
           description: args.description,
           status: args.status,
           clientId: args.clientId,
+          startDate: args.startDate,
+          endDate: args.endDate,
         });
         return project.save();
       },
@@ -173,6 +179,8 @@ const mutation = new GraphQLObjectType({
             },
           }),
         },
+        startDate: { type: GraphQLString },
+        endDate: { type: GraphQLString },
       },
       resolve(parent, args) {
         return Project.findByIdAndUpdate(
@@ -182,6 +190,8 @@ const mutation = new GraphQLObjectType({
               name: args.name,
               description: args.description,
               status: args.status,
+              startDate: args.startDate,
+              endDate: args.endDate,
             },
           },
           { new: true }
