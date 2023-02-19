@@ -27,4 +27,8 @@ app.use(
   })
 );
 
+app.get("*", function (req, res) {
+  res.send("public/index.html");
+});
+
 app.listen(port, console.log(`Server running on port ${port}`));
